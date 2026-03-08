@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Resume</title>
+
+<style>
+body {
+  background-color: #0b0b0b;
+  color: #e6e6e6;
+  font-family: monospace;
+  padding: 20px;
+}
+
+#terminal {
+  max-width: 900px;
+  margin: auto;
+}
+
+.command {
+  color: #6aff6a;
+}
+
+input {
+  background: none;
+  border: none;
+  color: #e6e6e6;
+  font-family: monospace;
+  width: 90%;
+  outline: none;
+}
+
+button {
+  background: none;
+  border: 1px solid #6aff6a;
+  color: #6aff6a;
+  padding: 5px 10px;
+  margin: 5px 5px 0 0;
+  cursor: pointer;
+  font-family: monospace;
+}
+
+button:hover {
+  background-color: #111;
+}
+
+a {
+  color: #4aa3ff;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+<h2>Sara Amrute</h2>
+<p style="color:#aaa;">
+CBSE Class X • Science (11th Grade)
+</p>
+<hr style="border-color:#222;">
+
+<p>Welcome.</p>
+<p>Type <span class="command">help</span> to see available commands.</p>
+
+<div id="output"></div>
+
+<div>
+  <span class="command">&gt;</span>
+  <input id="input" autofocus />
+</div>
+
+<div>
+  <button onclick="runCommand('help')">help</button>
+  <button onclick="runCommand('summary')">summary</button>
+  <button onclick="runCommand('skills')">skills</button>
+  <button onclick="runCommand('education')">education</button>
+  <button onclick="runCommand('languages')">languages</button>
+  <button onclick="runCommand('download_pdf')">download_pdf</button>
+  <button onclick="runCommand('contact')">contact</button>
+</div>
+
+</div>
+
+<!-- HIDDEN PDF LINK -->
+<a id="pdfLink" href="resume.pdf" target="_blank" download style="display:none;"></a>
+
+<script>
+const output = document.getElementById("output");
+const input = document.getElementById("input");
+
+const responses = {
+  help: `
+Available commands:
+- summary
+- skills
+- education
+- languages
+- download_pdf
+- contact
+  `,
+
+  summary: `
+Tech-oriented secondary school student with over two years of experience
+using AI tools and productivity software for academic and practical tasks.
+Skilled in LibreOffice, Microsoft Office, and Google Workspace, with
+hands-on familiarity in Linux and Windows environments.
+Known for a calm, methodical approach and reliable task execution.
+  `,
+
+  skills: `
+AI Tools:
+- ChatGPT
+- Gemini
+- Copilot
+
+Office & Productivity:
+- LibreOffice (Writer, Calc, Base)
+- Microsoft Office (Word, Excel, PowerPoint, Access)
+- Google Workspace (Docs, Sheets, Slides)
+
+Systems & Operations:
+- Linux (basic terminal usage)
+- Windows OS
+- Canva
+- Speech-to-text tools
+
+Data Handling:
+- Trend and pattern identification
+- Accurate data organization
+  `,
+
+  education: `
+Class X — CBSE
+Information Technology (Code 402)
+Strong academic performance
+
+Academic Interests:
+- Science and Technology
+- Applied digital systems
+  `,
+
+  languages: `
+English (fluent)
+Hindi (fluent)
+Marathi (fluent)
+  `,
+
+  download_pdf: `
+Opening resume PDF in a new tab...
+  `,
+
+  contact: `
+Name: Sara Amrute
+Email: saraamrute4@gmail.com
+Phone: 8898254646
+  `
+};
+
+function print(text) {
+  const block = document.createElement("pre");
+  block.textContent = text;
+  output.appendChild(block);
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function runCommand(cmd) {
+  cmd = cmd.trim().toLowerCase();
+  print("> " + cmd);
+
+  if (cmd === "download_pdf") {
+    print(responses.download_pdf);
+    document.getElementById("pdfLink").click();
+    return;
+  }
+
+  if (responses[cmd]) {
+    print(responses[cmd]);
+  } else {
+    print("Command not found. Type 'help'.");
+  }
+}
+
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    runCommand(input.value);
+    input.value = "";
+  }
+});
+</script>
+
+</body>
+</html>
